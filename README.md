@@ -2,14 +2,11 @@ GME: A Multi-Granularity Attention and Mamba-Driven Underwater Image Enhancer<p 
 conda activate gme
 
 # Install PyTorch (adjust cuda version as needed)
+# Example for CUDA 11.8:
 pip install torch torchvision torchaudio --index-url [https://download.pytorch.org/whl/cu118](https://download.pytorch.org/whl/cu118)
 
-# Install Mamba and Causal Conv1d (Required for VSS)
-pip install causal-conv1d>=1.2.0
-pip install mamba-ssm
-
-# Install other dependencies
-pip install opencv-python einops timm scipy matplotlib
+# Install dependencies
+pip install -r requirements.txt
 DatasetGME is trained primarily on the LSUI (Large Scale Underwater Image) dataset.Data StructureOrganize your dataset as follows:data/
 ├── LSUI/
 │   ├── train/
@@ -32,9 +29,10 @@ Inference / TestingTo evaluate the model on a test folder:python test.py \
   --input_dir ./data/LSUI/test/input \
   --weights ./checkpoints/GME_LSUI/best_model.pth \
   --result_dir ./results/
-ResultsGME demonstrates superior performance on both Full-Reference (FR) and No-Reference (NR) metrics.Quantitative Comparison (LSUI-Test)MethodPSNR ↑SSIM ↑UT-UIE24.4110.822SyreaNet20.9160.764WaterNet22.0100.857GME (Ours)28.5650.887Visual ComparisonQualitative results showing color correction and contrast enhancement:InputUT-UIESyreaNetGME (Ours)Ground TruthNote: GME successfully restores the red channel distribution and removes blue-green color casts more naturally than competing methods.Ablation StudyKey components were validated through ablation experiments on the LSUI dataset:w/o VSS: Removing the Visual State Space module significantly drops global contrast performance.w/o GB: Removing Group-Mix Attention leads to loss of fine local details.w/o AEM: Removing the Adaptive Enhancement Module reduces robustness across diverse scenes.Full Model: Achieves the highest PSNR (28.565) and SSIM (0.887), proving the synergy of all modules.Model ZooDownload pretrained weights for different datasets:DatasetMetrics (PSNR/SSIM)DownloadLSUI28.565 / 0.887LinkEUVP28.647 / 0.873LinkUIEB23.419 / 0.880LinkCitationIf you find this work useful in your research, please consider citing:@article{cao2025gme,
+ResultsGME demonstrates superior performance on both Full-Reference (FR) and No-Reference (NR) metrics.Quantitative Comparison (LSUI-Test)MethodPSNR ↑SSIM ↑UT-UIE24.4110.822SyreaNet20.9160.764WaterNet22.0100.857GME (Ours)28.5650.887Visual ComparisonQualitative results showing color correction and contrast enhancement:InputUT-UIESyreaNetGME (Ours)Ground Truth<img src="assets/sample_input.jpg" width="120" alt="Input"><img src="assets/sample_utuie.jpg" width="120" alt="UT-UIE"><img src="assets/sample_syreanet.jpg" width="120" alt="SyreaNet"><img src="assets/sample_gme.jpg" width="120" alt="GME"><img src="assets/sample_gt.jpg" width="120" alt="GT">Note: Please replace the image paths in assets/ with your actual result images.Ablation StudyKey components were validated through ablation experiments on the LSUI dataset:w/o VSS: Removing the Visual State Space module significantly drops global contrast performance.w/o GB: Removing Group-Mix Attention leads to loss of fine local details.w/o AEM: Removing the Adaptive Enhancement Module reduces robustness across diverse scenes.Full Model: Achieves the highest PSNR (28.565) and SSIM (0.887), proving the synergy of all modules.Model ZooDownload pretrained weights for different datasets:DatasetMetrics (PSNR/SSIM)DownloadLSUI28.565 / 0.887LSUI_ModelEUVP28.647 / 0.873EUVP_ModelUIEB23.419 / 0.880UIEB_ModelCitationIf you find this work useful in your research, please consider citing:@article{cao2025gme,
   title={GME: A Multi-Granularity Attention and Mamba-Driven Underwater Image Enhancer},
   author={Cao, Jingchao and Liu, Hongqing and Peng, Wangzhen and Liu, Yutao and Gu, Ke and Zhai, Guangtao and Dong, Junyu and Kwong, Sam},
   journal={arXiv preprint},
   year={2025}
 }
+LicenseThis project is released under the MIT License.
